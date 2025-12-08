@@ -23,6 +23,7 @@ const ExpensesTable = () => {
             <th>Title</th>
             <th>Date</th>
             <th>Value</th>
+            <th>Description</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -33,6 +34,7 @@ const ExpensesTable = () => {
               <td>{expense.title}</td>
               <td>{expense.date}</td>
               <td>{expense.value}</td>
+              <td>{expense.description}</td>
               <td>
                 <button
                   className="DeleteButton"
