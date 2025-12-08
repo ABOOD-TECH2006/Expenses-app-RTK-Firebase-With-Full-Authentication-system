@@ -1,43 +1,35 @@
 import { useRef } from "react";
-let ExpensesForm = (props) => {
-  let TitleRef = useRef();
-  let DateRef = useRef();
-  let ValueRef = useRef();
-  let DescriptionRef = useRef();
-  let OnClickSubmit = function (event) {
-    // ! In react don't even think about refreshing the page and By default while using The submit button
-    // !  the page refreshes auto so we use the event and prevent the default functions such refreshing the page
-    event.preventDefault();
-    if (CheckedData()) {
-      SaveExpenses();
-    }
-    //? console.log(TitleRef.current.value);
-  };
-  let CheckedData = () => {
+import { useDispatch } from "react-redux";
+import { addExpense } from "../redux/store";
+
+let ExpensesForm = () => {
+  const TitleRef = useRef();
+  const DateRef = useRef();
+  const ValueRef = useRef();
+  const DescriptionRef = useRef();
+  const dispatch = useDispatch();
+
+  const onSubmitHandler = (e) => {
+      
+    e.preventDefault();
     if (
-      TitleRef.current.value != "" &&
-      DateRef.current.value != "" &&
-      ValueRef.current.value != "" &&
-      DescriptionRef.current.value != ""
+      !TitleRef.current.value ||
+      !DateRef.current.value ||
+      !ValueRef.current.value ||
+      !DescriptionRef.current.value
     ) {
-      return true;
+      return alert("Enter required info");
     }
-    alert("Enter Required info");
-    return false;
-  };
-  function SaveExpenses() {
-    const ExpensesInputsValues = {
-      id: Date.now(),
-      title: TitleRef.current.value,
-      date: DateRef.current.value,
-      value: ValueRef.current.value,
-      description: DescriptionRef.current.value,
-    };
-    console.log(ExpensesInputsValues);
-    props.onNewExpense(ExpensesInputsValues);
-    Clear();
-  }
-  let Clear = () => {
+
+   let expense = {
+     id: Date.now(),
+     title: TitleRef.current.value,
+     date: DateRef.current.value,
+     value: ValueRef.current.value,
+     description: DescriptionRef.current.value,
+   };
+    dispatch(addExpense(expense));
+
     TitleRef.current.value = "";
     DateRef.current.value = "";
     ValueRef.current.value = "";
@@ -45,66 +37,32 @@ let ExpensesForm = (props) => {
   };
 
   return (
-    <>
-      <form onSubmit={OnClickSubmit}>
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="title">Title</label>
-            <input
-              type="text"
-              name="title"
-              id="title"
-              //! required
-              placeholder="Title"
-              ref={TitleRef}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="date">Date</label>
-            <input
-              type="date"
-              name="date"
-              id="date"
-              //! required
-              placeholder="Date"
-              ref={DateRef}
-            />
-          </div>
+    <form onSubmit={onSubmitHandler}>
+      <div className="form-row">
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
+          <input type="text" id="title" placeholder="Title" ref={TitleRef} />
         </div>
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="value">Value</label>
-            <input
-              type="number"
-              name="value"
-              id="value"
-              //! required
-              placeholder="Value"
-              ref={ValueRef}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="description">Description</label>
-            <input
-              type="text"
-              name="description"
-              id="description"
-              //! required
-              placeholder="Description"
-              ref={DescriptionRef}
-            />
-          </div>
+        <div className="form-group">
+          <label htmlFor="date">Date</label>
+          <input type="date" id="date" ref={DateRef} />
         </div>
-        {/* ()=>::we call this arrow function and we use it here to prevent runing the alert the time we refresh or Enter the page */}
-        <button
-          //   onClick={() => alert("Welcome Engineer")}
-          className="save-btn"
-          type="submit"
-        >
-          Save
-        </button>
-      </form>
-    </>
+      </div>
+      <div className="form-row">
+        <div className="form-group">
+          <label htmlFor="value">Value</label>
+          <input type="number" id="value" ref={ValueRef} />
+        </div>
+        <div className="form-group">
+          <label htmlFor="description">Description</label>
+          <input type="text" id="description" ref={DescriptionRef} />
+        </div>
+      </div>
+      <button type="submit" className="save-btn">
+        Save
+      </button>
+    </form>
   );
 };
+
 export default ExpensesForm;
