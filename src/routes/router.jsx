@@ -5,17 +5,16 @@ import Register from "../pages/Register";
 import ForgotPassword from "../pages/ForgotPassword";
 import { useSelector } from "react-redux";
 
-// Private Route
 const PrivateRoute = ({ children }) => {
   const { user, initialized } = useSelector((state) => state.auth);
 
-//   if (!initialized) {
-//     // عرض شاشة انتظار حقيقية بدل "Loading..."
-//     return <div>Checking authentication...</div>;
-//   }
+  if (!initialized) {
+    return <div>Checking authentication...</div>;
+  }
 
-  return !initialized ? children : <Navigate to="/login" />;
+  return user ? children : <Navigate to="/login" replace />;
 };
+
 const AppRoutes = () => (
   <Routes>
     <Route path="/login" element={<Login />} />

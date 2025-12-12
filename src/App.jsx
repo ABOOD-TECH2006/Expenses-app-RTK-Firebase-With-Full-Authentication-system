@@ -81,7 +81,7 @@ const App = () => {
 
               {/* Auth Buttons */}
               <Box mt={2} display="flex" gap={2}>
-                {/* {!user && (
+                {!user && (
                   <Button
                     variant="contained"
                     color="primary"
@@ -90,7 +90,7 @@ const App = () => {
                   >
                     Login with Google
                   </Button>
-                )} */}
+                )}
 
                 {user && (
                   <Button

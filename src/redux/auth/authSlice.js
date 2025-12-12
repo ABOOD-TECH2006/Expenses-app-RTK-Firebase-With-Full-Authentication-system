@@ -92,10 +92,13 @@ const authSlice = createSlice({
       })
 
       // ----------- Initialize Auth -----------
-      .addCase(initializeAuth.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.initialized = true; // بعد التحقق من المستخدم
+      .addCase(initializeAuth.pending, (state) => {
+        state.initialized = false;
+      })
+      .addCase(initializeAuth.rejected, (state) => {
+        state.initialized = true;
       });
+
   },
 });
 
