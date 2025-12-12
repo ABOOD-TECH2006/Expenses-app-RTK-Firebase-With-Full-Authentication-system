@@ -1,6 +1,6 @@
 // ExpensesRow.jsx
 import { useDispatch } from "react-redux";
-import { deleteExpenseFirebase } from "../redux/store";
+import { deleteExpenseFirebase } from "../redux/expensesSlice";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { TableRow, TableCell, IconButton } from "@mui/material";
@@ -31,7 +31,6 @@ const ExpensesRow = ({ expense }) => {
       },
       allowOutsideClick: () => !Swal.isLoading(),
     });
-
     if (result.isConfirmed) toast.success("Expense deleted successfully");
     else if (result.dismiss === Swal.DismissReason.cancel)
       toast("Deletion cancelled");

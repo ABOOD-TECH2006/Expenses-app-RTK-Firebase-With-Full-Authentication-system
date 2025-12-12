@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { addExpense } from "../redux/store";
+import { addExpense } from "../redux//expensesSlice";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { Box, TextField, Button, Skeleton } from "@mui/material";

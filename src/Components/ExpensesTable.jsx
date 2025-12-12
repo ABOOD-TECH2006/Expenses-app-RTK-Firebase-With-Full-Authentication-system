@@ -10,24 +10,26 @@ import {
   Skeleton,
 } from "@mui/material";
 import ExpensesRow from "./ExpensesRowBody";
+import { useSelector } from "react-redux";
 
-const ExpensesTable = ({ Expenses, loading }) => {
-  const skeletonRows = 5;
-
+const ExpensesTable = ({ isloading }) => {
+  const skeletonRows = 6;
+  const { expenses } = useSelector((state) => state.expenses);
+    
   return (
     <TableContainer component={Paper} elevation={6}>
       <Table>
         <TableHead>
-          <TableRow>
+          <TableRow >
             <TableCell>Title</TableCell>
             <TableCell>Date</TableCell>
             <TableCell>Value</TableCell>
             <TableCell>Description</TableCell>
-            <TableCell>Action</TableCell>
+            <TableCell>Delete</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {loading
+          {isloading
             ? Array.from({ length: skeletonRows }).map((_, idx) => (
                 <TableRow key={idx}>
                   <TableCell>
@@ -47,7 +49,7 @@ const ExpensesTable = ({ Expenses, loading }) => {
                   </TableCell>
                 </TableRow>
               ))
-            : Expenses.map((expense) => (
+            : expenses.map((expense) => (
                 <ExpensesRow key={expense.firebaseId} expense={expense} />
               ))}
         </TableBody>
